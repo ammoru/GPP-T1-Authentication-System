@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  gpp-t1-auth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gpp-t1-auth
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=UTC
+      - DATA_DIR=/data
+      - PRIVATE_KEY_PATH=/app/student_private.pem
+    volumes:
+      # persistent named volumes used by evaluator / for local dev persistence
+      - seed-data:/data
+      - cron-output:/cron
+
+      # local mounts for development (read-only). Keep these if keys are in repo root.
+      - ./student_private.pem:/app/student_private.pem:ro
+      - ./student_public.pem:/app/student_public.pem:ro
+      - ./instructor_public.pem:/app/instructor_public.pem:ro
+    restart: unless-stopped
+
+volumes:
+  seed-data:
+  cron-output:
