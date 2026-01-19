@@ -9,7 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { generateTotp } = require('../app/totp'); // expects app/totp.js exists
+const { generateTotp } = require('../totp'); // expects totp.js in parent dir
 
 const DATA_DIR = process.env.DATA_DIR || './data';
 const SEED_PATH = path.join(DATA_DIR, 'seed.txt');

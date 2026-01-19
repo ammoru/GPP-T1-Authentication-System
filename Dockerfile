@@ -4,7 +4,7 @@ FROM node:20-slim AS builder
 WORKDIR /app
 
 # Copy package files first for caching
-COPY app/package.json app/package-lock.json* /app/
+COPY app/package.json app/package-lock.json /app/
 
 # Install build deps and node modules
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
   && npm ci --silent
 
 # Copy application source
-COPY app /app
+COPY app/. /app/
 
 # ---------- Stage 2: Runtime ----------
 FROM node:20-slim AS runtime
